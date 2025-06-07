@@ -48,10 +48,10 @@ function Header() {
           />
         </Form>
 
-        <div className="flex items-center space-x-2 mt-4 sm:mt-0 sm:flex-none">
+        <div className="flex items-center w-full md:w-auto space-x-2 mt-4 sm:mt-0 sm:flex-none">
           <Link
             href="/basket"
-            className="flex-1 relative flex items-center justify-center sm:justify-start sm:flex-none bg-blue-500 hober:bg-blue-700 text-white px-4 py-2 font-bold space-x-2 rounded"
+            className="flex-1 relative flex items-center justify-center sm:justify-start sm:flex-none bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 font-bold space-x-2 rounded ml-2"
           >
             <TrolleyIcon className="w-6 h-6" />
             {/* span item count once global state is implamented */}

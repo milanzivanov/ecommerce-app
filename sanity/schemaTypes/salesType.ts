@@ -3,20 +3,20 @@ import { defineType, defineField } from "sanity";
 
 export const salesType = defineType({
   name: "sales",
-  title: "Sale",
+  title: "Sales",
   type: "document",
   icon: TagIcon,
   fields: [
     defineField({
       name: "title",
-      type: "string",
-      title: "Sale Title"
+      title: "Sale name",
+      type: "string"
     }),
     defineField({
       name: "description",
       type: "string",
       title: "Description",
-      description: "Sale description"
+      description: "Description"
     }),
     defineField({
       name: "discountAmount",
@@ -26,37 +26,37 @@ export const salesType = defineType({
     }),
     defineField({
       name: "couponCode",
-      type: "string",
       title: "Coupon Code",
+      type: "string",
       description: "The code that can be used to apply the discount."
     }),
     defineField({
       name: "validFrom",
       type: "datetime",
-      title: "Valid From"
+      title: "Valid from"
     }),
     defineField({
-      name: "validUntil",
+      name: "validTo",
       type: "datetime",
-      title: "Valid Until"
+      title: "Valid to"
     }),
     defineField({
       name: "isActive",
+      title: "Active",
       type: "boolean",
-      title: "Is Active",
       description: "Toggle to activate or deactivate the sale.",
       initialValue: true
     })
   ],
   preview: {
     select: {
-      title: "title",
+      title: "name",
       discountAmount: "discountAmount",
       couponCode: "couponCode",
       isActive: "isActive"
     },
-    prepare(selection) {
-      const { title, discountAmount, couponCode, isActive } = selection;
+    prepare(select) {
+      const { title, discountAmount, couponCode, isActive } = select;
       const status = isActive ? "Active" : "Inactive";
       return {
         title,

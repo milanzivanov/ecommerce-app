@@ -1,12 +1,28 @@
 import { TrolleyIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
+/**
+ * @sanity-opinionated.mdc
+ * Product schema type definition
+ * Defines the structure for product documents in the e-commerce system.
+ *
+ * @example
+ * ```ts
+ * // Query products
+ * *[_type == "product"] {
+ *   name,
+ *   price,
+ *   "imageUrl": image.asset->url
+ * }
+ * ```
+ */
 export const productType = defineType({
-  name: "products",
+  name: "product",
   title: "Products",
   type: "document",
   icon: TrolleyIcon,
   fields: [
+    // Basic product information
     defineField({
       name: "name",
       title: "Product name",
@@ -23,6 +39,8 @@ export const productType = defineType({
       },
       validation: (Rule) => Rule.required()
     }),
+
+    // Media and description
     defineField({
       name: "image",
       title: "Product image",
@@ -36,6 +54,8 @@ export const productType = defineType({
       title: "Description",
       type: "blockContent"
     }),
+
+    // Pricing and inventory
     defineField({
       name: "price",
       title: "Price",
@@ -43,16 +63,18 @@ export const productType = defineType({
       validation: (Rule) => Rule.required().min(0)
     }),
     defineField({
-      name: "categories",
-      title: "Categories",
-      type: "array",
-      of: [{ type: "reference", to: { type: "category" } }]
-    }),
-    defineField({
       name: "stock",
       title: "Stock",
       type: "number",
       validation: (Rule) => Rule.required().min(0)
+    }),
+
+    // Categorization
+    defineField({
+      name: "categories",
+      title: "Categories",
+      type: "array",
+      of: [{ type: "reference", to: { type: "category" } }]
     })
   ],
   preview: {
