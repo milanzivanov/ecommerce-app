@@ -10,9 +10,14 @@ import {
 import Link from "next/link";
 import Form from "next/form";
 import { TrolleyIcon, PackageIcon } from "@sanity/icons";
+import { useBasketStore } from "@/store";
 
 function Header() {
   const { user } = useUser();
+
+  const itemCount = useBasketStore((state) =>
+    state.items.reduce((acc, item) => acc + item.quantity, 0)
+  );
 
   // this feature is not available in free Clerk account
   // const createClerkPasskey = async () => {
@@ -54,7 +59,11 @@ function Header() {
             className="flex-1 relative flex items-center justify-center sm:justify-start sm:flex-none bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 font-bold space-x-2 rounded ml-2"
           >
             <TrolleyIcon className="w-6 h-6" />
-            {/* span item count once global state is implamented */}
+            {/* count items in basket */}
+            <span className="absolute -top-2 -right-4 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+              {itemCount}
+            </span>
+
             <span>My basket</span>
           </Link>
 
