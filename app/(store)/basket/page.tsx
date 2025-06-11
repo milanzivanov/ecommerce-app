@@ -5,7 +5,7 @@ import { useBasketStore } from "@/store";
 
 import { SignInButton, useAuth, useUser } from "@clerk/nextjs";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 
@@ -20,7 +20,7 @@ function BasketPage() {
   const groupedItems = useBasketStore((state) => state.getGroupedItems());
   const { isSignedIn } = useAuth();
   const user = useUser();
-  const router = useRouter();
+  // const router = useRouter();
 
   const [isClient, setIsClient] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -50,10 +50,14 @@ function BasketPage() {
         clerkUserId: user.user?.id ?? ""
       };
 
-      await createCheckoutSession(groupedItems, metadata);
+      // Create checkout session
+      const checkoutUrl = await createCheckoutSession(groupedItems, metadata);
       // Redirect to checkout page
-      // window.location.href = "/checkout";
-      router.push("/checkout");
+      // router.push("/checkout");
+
+      if (checkoutUrl) {
+        window.location.href = checkoutUrl;
+      }
     } catch (error) {
       console.error("Error checking out:", error);
       toast.error("Failed to process checkout. Please try again.");
@@ -76,11 +80,11 @@ function BasketPage() {
   return (
     <div className="container mx-auto max-w-7xl p-4">
       <h1 className="text-2xl font-bold mb-4">Your basket</h1>
-      <div className="flex flex-col lg:flex-row gap-8">
+      <div className="flex flex-col flex-wrap lg:flex-row gap-4">
         {groupedItems?.map((item) => (
           <div
             key={item.product._id}
-            className="mb-4 p-4 border rounded flex items-center justify-between"
+            className="p-4 border rounded flex items-center justify-between"
           >
             <div className="w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 mr-4">
               <Image
@@ -108,7 +112,8 @@ function BasketPage() {
         ))}
       </div>
 
-      <div className="w-full lg:w-80 lg:sticky lg:top-4 h-fit bg-white p-6 border rounded order-first lg:order-last fixed left-0 lg:left-auto bottom-0 mb-4">
+      {/* summery section */}
+      <div className="mt-4 w-full lg:w-80 lg:sticky lg:top-4 h-fit bg-white p-6 border rounded order-first lg:order-last fixed left-0 lg:left-auto bottom-0 mb-4">
         <h3 className="text-xl font-semibold">Order summary</h3>
         <div className="mt-4 space-y-2">
           <p className="flex justify-between text-gray-600 text-sm">
