@@ -281,6 +281,41 @@ export type SanityAssetSourceData = {
 
 export type AllSanitySchemaTypes = Sales | Order | Product | Category | BlockContent | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: ./sanity/lib/orders/getMyOrders.ts
+// Variable: MY_ORDERS_QUERY
+// Query: *[_type == "order" && clerkUserId == $userId] | order(orderDate desc) {      _id,      orderNumber,      customerName,      email,      totalPrice,      currency,      status,      orderDate,      amountDiscount,      products[] {        quantity,        product-> {          _id,          name,          price,          image        }      }    }
+export type MY_ORDERS_QUERYResult = Array<{
+  _id: string;
+  orderNumber: string | null;
+  customerName: string | null;
+  email: string | null;
+  totalPrice: number | null;
+  currency: string | null;
+  status: "cancelled" | "delivered" | "paid" | "pending" | "shipped" | null;
+  orderDate: string | null;
+  amountDiscount: number | null;
+  products: Array<{
+    quantity: number | null;
+    product: {
+      _id: string;
+      name: string | null;
+      price: number | null;
+      image: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+      } | null;
+    } | null;
+  }> | null;
+}>;
+
 // Source: ./sanity/lib/products/getAllCategories.ts
 // Variable: ALL_CATEGORIES_QUERY
 // Query: *[_type == "category"] | order(name asc)
@@ -576,6 +611,7 @@ export type ACTIVE_SALE_BY_COUPON_QUERYResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    "*[_type == \"order\" && clerkUserId == $userId] | order(orderDate desc) {\n      _id,\n      orderNumber,\n      customerName,\n      email,\n      totalPrice,\n      currency,\n      status,\n      orderDate,\n      amountDiscount,\n      products[] {\n        quantity,\n        product-> {\n          _id,\n          name,\n          price,\n          image\n        }\n      }\n    }": MY_ORDERS_QUERYResult;
     "*[_type == \"category\"] | order(name asc)": ALL_CATEGORIES_QUERYResult;
     "*[_type == \"product\"] | order(name asc)": ALL_PRODUCTS_QUERYResult;
     "*[_type == \"product\" && slug.current == $slug] | order(name asc)[0]": PRODUCT_BY_ID_QUERYResult;
