@@ -62,8 +62,6 @@ export async function POST(request: NextRequest) {
 }
 
 async function createOrderInSanity(session: Stripe.Checkout.Session) {
-  console.log("//////// session", session);
-
   const {
     id,
     amount_total,

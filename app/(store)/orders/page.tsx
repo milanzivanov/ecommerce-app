@@ -29,7 +29,7 @@ async function OrdersPage() {
           <div className="space-y-6 sm:space-y-8">
             {orders.map((order: MY_ORDERS_QUERYResult[0]) => (
               <div
-                key={order.orderNumber}
+                key={`${order.orderNumber}-${order._id}`}
                 className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden"
               >
                 <div className="p-4 sm:p-6 border-b border-gray-200">
