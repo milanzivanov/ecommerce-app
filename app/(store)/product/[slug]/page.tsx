@@ -14,9 +14,9 @@ async function productPage({ params }: { params: Promise<{ slug: string }> }) {
 
   console.log("product slug", product);
 
-  const isOutOfStock = product.stock != null && product.stock <= 0;
-
   if (!product) return notFound();
+
+  const isOutOfStock = product.stock != null && product.stock <= 0;
 
   return (
     <div className="conatiner mx-auto max-w-7xl px-4 py-8">
