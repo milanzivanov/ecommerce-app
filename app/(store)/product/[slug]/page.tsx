@@ -12,8 +12,6 @@ async function productPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const product = await getProductBySlug(slug);
 
-  console.log("product slug", product);
-
   if (!product) return notFound();
 
   const isOutOfStock = product.stock != null && product.stock <= 0;
