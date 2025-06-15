@@ -69,13 +69,13 @@ function BasketPage() {
   if (!isClient) return <Loader />;
 
   if (groupedItems.length === 0) {
-    <div className="container mx-auto max-w-7xl p-4 flex items-center justify-center min-h-[50vh]">
-      <h1 className="text-2xl font-bold mb-6 text-gray-800">Your basket</h1>
-      <p className="text-gray-600 text-lg">Your basket is empty</p>
-    </div>;
+    return (
+      <div className="container mx-auto max-w-7xl p-4 flex flex-col items-center justify-center min-h-[50vh]">
+        <h1 className="text-2xl font-bold mb-2 text-gray-800">Your basket</h1>
+        <p className="text-gray-600 text-lg">Your basket is empty!!!</p>
+      </div>
+    );
   }
-
-  console.log("groupedItems", groupedItems);
 
   return (
     <div className="container mx-auto max-w-7xl p-4">
@@ -97,7 +97,7 @@ function BasketPage() {
             </div>
 
             <div className="min-w-0">
-              <h2 className="text-lg sm:text-xl font-semibold truncate">
+              <h2 className="text-base sm:text-xl font-semibold truncate">
                 {item.product.name}
               </h2>
               <p className="text-sm sm:text-base text-gray-600">
@@ -105,7 +105,7 @@ function BasketPage() {
               </p>
             </div>
 
-            <div className="flex items-center ml-4 flex-shrink-0">
+            <div className="flex items-center md:ml-4 ml-0 flex-shrink-0">
               <AddToBasketButton product={item.product} />
             </div>
           </div>
@@ -118,7 +118,9 @@ function BasketPage() {
         <div className="mt-4 space-y-2">
           <p className="flex justify-between text-gray-600 text-sm">
             <span>Subtotal:</span>
-            <span>${useBasketStore.getState().getTotalPrice().toFixed(2)}</span>
+            <span className="font-semibold">
+              ${useBasketStore.getState().getTotalPrice().toFixed(2)}
+            </span>
           </p>
         </div>
       </div>
@@ -127,7 +129,7 @@ function BasketPage() {
         <button
           onClick={handleCheckOut}
           disabled={isLoading}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded disabled:bg-gray-400"
+          className="bg-blue-500 mt-2 md:mt-0 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded disabled:bg-gray-400"
         >
           {isLoading ? "Processing..." : "Checkout"}
         </button>
