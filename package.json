@@ -50,6 +50,6 @@
     "vercel": "^43.1.0"
   },
   "resolutions": {
-    "@sanity/client": "^7.3.0"
+    "@sanity/client": "^7.6.0"
   }
 }

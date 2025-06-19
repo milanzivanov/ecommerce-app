@@ -53,6 +53,7 @@ function Header() {
           />
         </Form>
 
+        {/* my basket */}
         <div className="flex items-center w-full md:w-auto space-x-2 mt-4 sm:mt-0 sm:flex-none">
           <Link
             href="/basket"

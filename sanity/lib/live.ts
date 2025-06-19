@@ -4,17 +4,12 @@
 import { client } from "./client";
 import { defineLive } from "next-sanity";
 
-const token = process.env.SANITY_API_TOKEN;
+const token = process.env.SANITY_API_READ_TOKEN;
 if (!token) {
-  throw new Error("Missing SANITY_API_TOKEN environment variable");
+  throw new Error("Missing SANITY_API_READ_TOKEN environment variable");
 }
 
 export const { sanityFetch, SanityLive } = defineLive({
-  // client: client.withConfig({
-  // // Live content is currently only available on the experimental API
-  // // https://www.sanity.io/docs/api-versioning
-  // apiVersion: "vX"
-  // })
   client,
   serverToken: token,
   browserToken: token,
